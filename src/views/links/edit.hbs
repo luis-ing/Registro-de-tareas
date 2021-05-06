@@ -1,0 +1,27 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/links/edit/{{link.idbooks}}" method="POST">
+                        <div class="form-group">
+                            <input type="text" value="{{link.name_book}}" class="form-control" name="name_book" placeholder="Título" autofocus required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" value="{{link.author}}" class="form-control" name="author" placeholder="Autor" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="date" value='{{link.date_public}}' class="form-control" name="date_public" placeholder="Fecha de publicación">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="4" name="information" placeholder="Información">{{link.information}}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-succes btn-block">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
