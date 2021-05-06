@@ -48,7 +48,7 @@
                         AGREGAR TAREA
                     </th>
                 </tr>
-                <tr><form action="/links/add" method="POST">
+                <tr><form action="/task/add" method="POST">
                 <th scope="col"><input type="text" class="form-control" name="name_book" placeholder="Título" autofocus required></th>
                 <th scope="col"><input type="text" class="form-control" name="author" placeholder="Autor" required></th>
                 <th scope="col"><input type="date" class="form-control" name="date_public" placeholder="Fecha de publicación"></th>
@@ -77,21 +77,21 @@
                 </tr>
             </thead>
             <tbody>
-                {{#each links}}
+                {{#each task}}
                 <tr>
                 <td>{{name_book}}</td>
                 <td>{{author}}</td>
                 <td>{{timeago date_public}}</td>
                 <td>{{information}}</td>
-                <td><a href="/links/hecho/{{idbooks}}" class="btn btn-success"><i class="check-circle"></i> Realizado</a></td>
-                <td><a href="/links/edit/{{idbooks}}" class="btn btn-secondary">Editar</a></td>
-                <td><a href="/links/delete/{{idbooks}}" class="btn btn-danger">Eliminar</a></td>
+                <td><a href="/task/hecho/{{idbooks}}" class="btn btn-success"><i class="check-circle"></i> Realizado</a></td>
+                <td><a href="/task/edit/{{idbooks}}" class="btn btn-secondary">Editar</a></td>
+                <td><a href="/task/delete/{{idbooks}}" class="btn btn-danger">Eliminar</a></td>
                 </tr>
                 {{else}}
                     <tr>
                         <td class="text-center" colspan="7">
                             La lista está vacía.
-                            <a href="/links/add">¡Agregar tarea!</a>
+                            <a href="/task/add">¡Agregar tarea!</a>
                         </td>
                     </tr>
                 {{/each}}
@@ -127,7 +127,7 @@
                     <tr>
                         <td class="text-center" colspan="5">
                             La lista está vacía.
-                            <a href="/links/add">¡Agrega uno!</a>
+                            <a href="/task/add">¡Agrega uno!</a>
                         </td>
                     </tr>
                 {{/each}}

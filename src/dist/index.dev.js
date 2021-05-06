@@ -64,7 +64,7 @@ app.use(function (req, res, next) {
 
 app.use(require('./routes'));
 app.use(require('./routes/authentication'));
-app.use('/links', require('./routes/links')); //Obtener datos a traves del prefijo links 
+app.use('/task', require('./routes/task')); //Obtener datos a traves del prefijo task 
 // Public
 
 app.use(express["static"](path.join(__dirname, 'public'))); // Iniciando el servidor
