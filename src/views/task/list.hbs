@@ -1,44 +1,3 @@
-<!--
-<div class="container p-4">
-    <div class="row">
-
-        {{#each links}}
-            <div class="col-md-3">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <a>
-                            <h3 class="card-title text-uppercase">
-                                {{name_book}}
-                            </h3>
-                        </a>
-                        <p class="m-2">
-                            {{author}}
-                        </p>
-                        <p class="m-2">
-                            {{timeago date_public}}
-                        </p>
-                        <p class="m-2 text-justify">
-                            {{information}}
-                        </p>
-                        <a href="/links/delete/{{idbooks}}" class="btn btn-danger">Eliminar</a>
-                        <a href="/links/edit/{{idbooks}}" class="btn btn-secondary">Editar</a>
-                    </div>
-                </div>
-            </div>
-        {{else}}
-            <div class="col-md-4 mx-auto">
-                <div class="card card-body text-center">
-                    <p>No hay libros agregados</p>
-                    <a href="/links/add">¡Agrega uno!</a>
-                </div>
-            </div>
-        {{/each}}
-
-    </div>
-</div>
--->
-
-
 <div class="container">
     <div class="col-md-12 col-12">
         <table class="table table-hover">
@@ -49,10 +8,7 @@
                     </th>
                 </tr>
                 <tr><form action="/task/add" method="POST">
-                <th scope="col"><input type="text" class="form-control" name="name_book" placeholder="Título" autofocus required></th>
-                <th scope="col"><input type="text" class="form-control" name="author" placeholder="Autor" required></th>
-                <th scope="col"><input type="date" class="form-control" name="date_public" placeholder="Fecha de publicación"></th>
-                <th scope="col"><input type="text" class="form-control" name="information" placeholder="Información"></th>
+                <th scope="col"><input type="text" class="form-control" name="name_task" placeholder="Título" autofocus required></th>
                 <th scope="col"><button class="btn btn-primary btn-block">Guardar</button></th>
                 </form></tr>
             </thead>
@@ -67,10 +23,8 @@
                     </th>
                 </tr>
                 <tr>
-                <th scope="col">Nombre del libro</th>
-                <th scope="col">Autor</th>
-                <th scope="col">Fecha de publicación</th>
-                <th scope="col">Información</th>
+                <th scope="col">Tarea</th>
+                <th scope="col">Fecha de inicio</th>
                 <th scope="col">Finalizar tarea</th>
                 <th scope="col">Editar</th>
                 <th scope="col">Eliminar</th>
@@ -79,19 +33,16 @@
             <tbody>
                 {{#each task}}
                 <tr>
-                <td>{{name_book}}</td>
-                <td>{{author}}</td>
+                <td>{{name_task}}</td>
                 <td>{{timeago date_public}}</td>
-                <td>{{information}}</td>
-                <td><a href="/task/hecho/{{idbooks}}" class="btn btn-success"><i class="check-circle"></i> Realizado</a></td>
-                <td><a href="/task/edit/{{idbooks}}" class="btn btn-secondary">Editar</a></td>
-                <td><a href="/task/delete/{{idbooks}}" class="btn btn-danger">Eliminar</a></td>
+                <td><a href="/task/realizado/{{idtask}}" class="btn btn-success"><i class="check-circle"></i> Realizado</a></td>
+                <td><a href="/task/edit/{{idtask}}" class="btn btn-secondary">Editar</a></td>
+                <td><a href="/task/delete/{{idtask}}" class="btn btn-danger">Eliminar</a></td>
                 </tr>
                 {{else}}
                     <tr>
                         <td class="text-center" colspan="7">
                             La lista está vacía.
-                            <a href="/task/add">¡Agregar tarea!</a>
                         </td>
                     </tr>
                 {{/each}}
@@ -107,27 +58,24 @@
                     </th>
                 </tr>
                 <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nombre del libro</th>
-                <th scope="col">Autor</th>
-                <th scope="col">Fecha de publicación</th>
-                <th scope="col">Información</th>
+                <th scope="col">Tarea</th>
+                <th scope="col">Fecha de inicio</th>
+                <th scope="col">Fecha de terminación</th>
+                <th scope="col">Tiempo de trabajo</th>
                 </tr>
             </thead>
             <tbody>
                 {{#each hechos}}
                 <tr>
-                <th scope="row"></th>
-                <td>{{name_book}}</td>
-                <td>{{author}}</td>
+                <td>{{name_task}}</td>
                 <td>{{date_public}}</td>
-                <td>{{information}}</td>
+                <td>{{date_final}}</td>
+                <td>{{dias}} días, /{{horas}} horas /{{minutos}} minutos</td>
                 </tr>
                 {{else}}
                     <tr>
                         <td class="text-center" colspan="5">
                             La lista está vacía.
-                            <a href="/task/add">¡Agrega uno!</a>
                         </td>
                     </tr>
                 {{/each}}

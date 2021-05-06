@@ -13,30 +13,31 @@ router.get('/add', isLoggedIn, function (req, res) {
   res.render('task/add');
 });
 router.post('/add', isLoggedIn, function _callee(req, res) {
-  var _req$body, name_book, author, date_public, information, newLink;
+  var now, _req$body, name_task, _req$body$date_public, date_public, _req$body$date_final, date_final, _req$body$status, status, newLink;
 
   return regeneratorRuntime.async(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
           //console.log(req.body);
-          _req$body = req.body, name_book = _req$body.name_book, author = _req$body.author, date_public = _req$body.date_public, information = _req$body.information;
+          now = new Date();
+          _req$body = req.body, name_task = _req$body.name_task, _req$body$date_public = _req$body.date_public, date_public = _req$body$date_public === void 0 ? now : _req$body$date_public, _req$body$date_final = _req$body.date_final, date_final = _req$body$date_final === void 0 ? now : _req$body$date_final, _req$body$status = _req$body.status, status = _req$body$status === void 0 ? 1 : _req$body$status;
           newLink = {
-            name_book: name_book,
-            author: author,
+            name_task: name_task,
             date_public: date_public,
-            information: information,
+            date_final: date_final,
+            status: status,
             users_idusers: req.user.idusers
           }; //console.log(newLink);
 
-          _context.next = 4;
-          return regeneratorRuntime.awrap(pool.query('INSERT INTO favorite_books set ?', [newLink]));
+          _context.next = 5;
+          return regeneratorRuntime.awrap(pool.query('INSERT INTO task_table set ?', [newLink]));
 
-        case 4:
+        case 5:
           req.flash('success', 'Libro guardado correctamente');
           res.redirect('/task');
 
-        case 6:
+        case 7:
         case "end":
           return _context.stop();
       }
@@ -50,12 +51,12 @@ router.get('/', isLoggedIn, function _callee2(req, res) {
       switch (_context2.prev = _context2.next) {
         case 0:
           _context2.next = 2;
-          return regeneratorRuntime.awrap(pool.query('SELECT * FROM favorite_books WHERE information=1 AND users_idusers = ? ORDER BY name_book ASC', [req.user.idusers]));
+          return regeneratorRuntime.awrap(pool.query('SELECT * FROM task_table WHERE status=1 AND users_idusers = ? ORDER BY name_task ASC', [req.user.idusers]));
 
         case 2:
           task = _context2.sent;
           _context2.next = 5;
-          return regeneratorRuntime.awrap(pool.query('SELECT * FROM favorite_books WHERE information=2 AND users_idusers = ?', [req.user.idusers]));
+          return regeneratorRuntime.awrap(pool.query('SELECT TIMESTAMPDIFF (MINUTE, date_public, date_final) AS minutos, TIMESTAMPDIFF (HOUR, date_public, date_final) AS horas, TIMESTAMPDIFF (DAY, date_public, date_final) AS dias, name_task, date_public, date_final FROM task_table WHERE status=2 AND users_idusers = ? ORDER BY name_task ASC', [req.user.idusers]));
 
         case 5:
           hechos = _context2.sent;
@@ -72,15 +73,15 @@ router.get('/', isLoggedIn, function _callee2(req, res) {
     }
   });
 });
-router.get('/delete/:idbooks', isLoggedIn, function _callee3(req, res) {
-  var idbooks;
+router.get('/delete/:idtask', isLoggedIn, function _callee3(req, res) {
+  var idtask;
   return regeneratorRuntime.async(function _callee3$(_context3) {
     while (1) {
       switch (_context3.prev = _context3.next) {
         case 0:
-          idbooks = req.params.idbooks;
+          idtask = req.params.idtask;
           _context3.next = 3;
-          return regeneratorRuntime.awrap(pool.query('DELETE FROM favorite_books WHERE idbooks = ?', [idbooks]));
+          return regeneratorRuntime.awrap(pool.query('DELETE FROM task_table WHERE idtask = ?', [idtask]));
 
         case 3:
           req.flash('success', 'Datos eliminados correctamente');
@@ -93,46 +94,48 @@ router.get('/delete/:idbooks', isLoggedIn, function _callee3(req, res) {
     }
   });
 });
-router.get('/hecho/:idbooks', isLoggedIn, function _callee4(req, res) {
-  var idbooks, _req$body$information, information, newLink;
+router.get('/realizado/:idtask', isLoggedIn, function _callee4(req, res) {
+  var now, idtask, _req$body2, _req$body2$status, status, _req$body2$date_final, date_final, newLink;
 
   return regeneratorRuntime.async(function _callee4$(_context4) {
     while (1) {
       switch (_context4.prev = _context4.next) {
         case 0:
-          idbooks = req.params.idbooks;
-          _req$body$information = req.body.information, information = _req$body$information === void 0 ? 2 : _req$body$information;
+          now = new Date();
+          idtask = req.params.idtask;
+          _req$body2 = req.body, _req$body2$status = _req$body2.status, status = _req$body2$status === void 0 ? 2 : _req$body2$status, _req$body2$date_final = _req$body2.date_final, date_final = _req$body2$date_final === void 0 ? now : _req$body2$date_final;
           newLink = {
-            information: information
+            date_final: date_final,
+            status: status
           };
-          _context4.next = 5;
-          return regeneratorRuntime.awrap(pool.query('UPDATE favorite_books set ? WHERE idbooks = ?', [newLink, idbooks]));
+          _context4.next = 6;
+          return regeneratorRuntime.awrap(pool.query('UPDATE task_table set ? WHERE idtask = ?', [newLink, idtask]));
 
-        case 5:
+        case 6:
           req.flash('success', 'Cambios guardados correctamente');
           res.redirect('/task');
 
-        case 7:
+        case 8:
         case "end":
           return _context4.stop();
       }
     }
   });
 });
-router.get('/edit/:idbooks', isLoggedIn, function _callee5(req, res) {
-  var idbooks, task;
+router.get('/edit/:idtask', isLoggedIn, function _callee5(req, res) {
+  var idtask, task;
   return regeneratorRuntime.async(function _callee5$(_context5) {
     while (1) {
       switch (_context5.prev = _context5.next) {
         case 0:
-          idbooks = req.params.idbooks;
+          idtask = req.params.idtask;
           _context5.next = 3;
-          return regeneratorRuntime.awrap(pool.query('SELECT * FROM favorite_books WHERE idbooks = ?', [idbooks]));
+          return regeneratorRuntime.awrap(pool.query('SELECT * FROM task_table WHERE idtask = ?', [idtask]));
 
         case 3:
           task = _context5.sent;
           res.render('task/edit', {
-            link: task[0]
+            task: task[0]
           });
 
         case 5:
@@ -142,23 +145,19 @@ router.get('/edit/:idbooks', isLoggedIn, function _callee5(req, res) {
     }
   });
 });
-router.post('/edit/:idbooks', isLoggedIn, function _callee6(req, res) {
-  var idbooks, _req$body2, name_book, author, date_public, information, newLink;
-
+router.post('/edit/:idtask', isLoggedIn, function _callee6(req, res) {
+  var idtask, name_task, newLink;
   return regeneratorRuntime.async(function _callee6$(_context6) {
     while (1) {
       switch (_context6.prev = _context6.next) {
         case 0:
-          idbooks = req.params.idbooks;
-          _req$body2 = req.body, name_book = _req$body2.name_book, author = _req$body2.author, date_public = _req$body2.date_public, information = _req$body2.information;
+          idtask = req.params.idtask;
+          name_task = req.body.name_task;
           newLink = {
-            name_book: name_book,
-            author: author,
-            date_public: date_public,
-            information: information
+            name_task: name_task
           };
           _context6.next = 5;
-          return regeneratorRuntime.awrap(pool.query('UPDATE favorite_books set ? WHERE idbooks = ?', [newLink, idbooks]));
+          return regeneratorRuntime.awrap(pool.query('UPDATE task_table set ? WHERE idtask = ?', [newLink, idtask]));
 
         case 5:
           req.flash('success', 'Cambios guardados correctamente');
