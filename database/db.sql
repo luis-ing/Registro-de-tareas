@@ -18,18 +18,17 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `organizador_tareas_bd`.`favorite_books`
+-- Table `organizador_tareas_bd`.`task_table`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `organizador_tareas_bd`.`favorite_books` (
-  `idbooks` INT NOT NULL AUTO_INCREMENT,
-  `name_book` VARCHAR(45) NOT NULL,
-  `author` VARCHAR(45) NULL,
-  `date_public` VARCHAR(40) NULL,
-  `information` LONGTEXT NULL,
+CREATE TABLE IF NOT EXISTS `organizador_tareas_bd`.`task_table` (
+  `idtask` INT NOT NULL AUTO_INCREMENT,
+  `name_task` VARCHAR(45) NOT NULL,
+  `date_public` DATETIME NULL,
+  `date_final` DATETIME NULL,
+  `status` INT NULL,
   `users_idusers` INT(11) NULL,
-  PRIMARY KEY (`idbooks`),
-  INDEX `fk_favorite_books_users_idx` (`users_idusers` ASC),
-  CONSTRAINT `fk_favorite_books_users`
+  PRIMARY KEY (`idtask`),
+  INDEX `idusers` (`users_idusers` ASC),
     FOREIGN KEY (`users_idusers`)
     REFERENCES `organizador_tareas_bd`.`users` (`idusers`)
     ON DELETE NO ACTION
