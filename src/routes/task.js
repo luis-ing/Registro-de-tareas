@@ -21,7 +21,7 @@ router.post('/add', isLoggedIn, async (req, res) => {
     };
     //console.log(newLink);
     await pool.query('INSERT INTO task_table set ?', [newLink]);
-    req.flash('success', 'Libro guardado correctamente');
+    req.flash('success', 'Tarea guardada correctamente');
     res.redirect('/task');
 });
 
@@ -49,7 +49,7 @@ router.get('/realizado/:idtask', isLoggedIn, async (req, res) =>{
         status
     };
     await pool.query('UPDATE task_table set ? WHERE idtask = ?', [newLink, idtask]);
-    req.flash('success', 'Cambios guardados correctamente');
+    req.flash('success', 'Tarea realizada');
     res.redirect('/task');
 });
 

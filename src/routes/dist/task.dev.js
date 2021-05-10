@@ -34,7 +34,7 @@ router.post('/add', isLoggedIn, function _callee(req, res) {
           return regeneratorRuntime.awrap(pool.query('INSERT INTO task_table set ?', [newLink]));
 
         case 5:
-          req.flash('success', 'Libro guardado correctamente');
+          req.flash('success', 'Tarea guardada correctamente');
           res.redirect('/task');
 
         case 7:
@@ -112,7 +112,7 @@ router.get('/realizado/:idtask', isLoggedIn, function _callee4(req, res) {
           return regeneratorRuntime.awrap(pool.query('UPDATE task_table set ? WHERE idtask = ?', [newLink, idtask]));
 
         case 6:
-          req.flash('success', 'Cambios guardados correctamente');
+          req.flash('success', 'Tarea realizada');
           res.redirect('/task');
 
         case 8:
